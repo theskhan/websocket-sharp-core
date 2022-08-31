@@ -4,10 +4,6 @@
 
 ## Important Notes ##
 ## Original repository is not updated to be used with .Net Core. There was a PR, but looks like it was not yet  merged even after an year. I have created this fork and updated all references to .Net Standard 2.1 and published the nuget package. All example projects also updated to .Net 6.0.  ##
-
-## To install the package: ##    
-```Install-Package websocket-sharp-core-netstandard -Version 1.0.0```
-    
     
 websocket-sharp supports:
 
@@ -20,12 +16,6 @@ websocket-sharp supports:
 - [Connecting through the HTTP proxy server](#connecting-through-the-http-proxy-server)
 - .NET Framework **3.5** or later (includes compatible environment such as [Mono])
 
-## Branches ##
-
-- [master] for production releases.
-- [hybi-00] for older [draft-ietf-hybi-thewebsocketprotocol-00]. No longer maintained.
-- [draft75] for even more old [draft-hixie-thewebsocketprotocol-75]. No longer maintained.
-
 ## Build ##
 
 websocket-sharp is built as a single assembly, **websocket-sharp.dll**.
@@ -34,40 +24,15 @@ websocket-sharp is developed with [MonoDevelop]. So a simple way to build is to 
 
 ## Install ##
 
-### Self Build ###
-
-You should add your websocket-sharp.dll (e.g. `/path/to/websocket-sharp/bin/Debug/websocket-sharp.dll`) to the library references of your project.
-
-If you would like to use that dll in your [Unity] project, you should add it to any folder of your project (e.g. `Assets/Plugins`) in the **Unity Editor**.
-
 ### NuGet Gallery ###
 
-websocket-sharp is available on the [NuGet Gallery], as still a **prerelease** version.
+websocket-sharp is available on the [NuGet Gallery]
 
-- [NuGet Gallery: websocket-sharp]
+- [NuGet Gallery: websocket-sharp-core-netstandard]
 
 You can add websocket-sharp to your project with the NuGet Package Manager, by using the following command in the Package Manager Console.
 
-    PM> Install-Package WebSocketSharp -Pre
-
-### Unity Asset Store ###
-
-websocket-sharp is available on the Unity Asset Store (Sorry, Not available now).
-
-- [WebSocket-Sharp for Unity]
-
-It works with **Unity Free**, but there are some limitations:
-
-- [Security Sandbox of the Webplayer] (The server is not available in Web Player)
-- [WebGL Networking] (Not available in WebGL)
-- Incompatible platform (Not available for such UWP)
-- Lack of dll for the System.IO.Compression (The compression extension is not available on Windows)
-- .NET Socket Support for iOS/Android (iOS/Android Pro is required if your Unity is earlier than Unity 5)
-- .NET API 2.0 compatibility level for iOS/Android
-
-.NET API 2.0 compatibility level for iOS/Android may require to fix lack of some features for later than .NET Framework 2.0, such as the `System.Func<...>` delegates (so i have added them in the asset package).
-
-And it is priced at **US$15**. I believe your $15 makes this project more better, **Thank you!**
+    PM> Install-Package websocket-sharp-core-netstandard -Version 1.0.0
 
 ## Usage ##
 
