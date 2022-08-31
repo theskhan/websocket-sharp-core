@@ -2,6 +2,8 @@
 
 ## Welcome to websocket-sharp! ##
 
+Original repository is not updated to be used with .Net Core. There was a PR, but looks like it was not still merged even afetr an year. I have created this fork and updated all references to .Net 6.0. All example projects also updated to .Net 6.0.
+
 websocket-sharp supports:
 
 - [RFC 6455](#supported-websocket-specifications)
