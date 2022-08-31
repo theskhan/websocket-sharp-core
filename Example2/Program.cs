@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
@@ -11,13 +12,20 @@ namespace Example2
   {
     public static void Main (string[] args)
     {
-      // Create a new instance of the WebSocketServer class.
-      //
-      // If you would like to provide the secure connection, you should
-      // create a new instance with the 'secure' parameter set to true or
-      // with a wss scheme WebSocket URL.
 
-      var wssv = new WebSocketServer (4649);
+            IConfiguration appConfig = new ConfigurationBuilder()
+                .AddJsonFile("config.json", true, true)
+                .AddEnvironmentVariables()
+                .Build();
+
+
+            // Create a new instance of the WebSocketServer class.
+            //
+            // If you would like to provide the secure connection, you should
+            // create a new instance with the 'secure' parameter set to true or
+            // with a wss scheme WebSocket URL.
+
+            var wssv = new WebSocketServer (4649);
       //var wssv = new WebSocketServer (5963, true);
 
       //var wssv = new WebSocketServer (System.Net.IPAddress.Any, 4649);
@@ -50,38 +58,38 @@ namespace Example2
       // To change the logging level.
       wssv.Log.Level = LogLevel.Trace;
 
-      // To change the wait time for the response to the WebSocket Ping or Close.
-      //wssv.WaitTime = TimeSpan.FromSeconds (2);
+            // To change the wait time for the response to the WebSocket Ping or Close.
+            //wssv.WaitTime = TimeSpan.FromSeconds (2);
 
-      // Not to remove the inactive sessions periodically.
-      //wssv.KeepClean = false;
+            // Not to remove the inactive sessions periodically.
+            //wssv.KeepClean = false;
 #endif
-      // To provide the secure connection.
-      /*
-      var cert = ConfigurationManager.AppSettings["ServerCertFile"];
-      var passwd = ConfigurationManager.AppSettings["CertFilePassword"];
-      wssv.SslConfiguration.ServerCertificate = new X509Certificate2 (cert, passwd);
-       */
+            // To provide the secure connection.
 
-      // To provide the HTTP Authentication (Basic/Digest).
-      /*
-      wssv.AuthenticationSchemes = AuthenticationSchemes.Basic;
-      wssv.Realm = "WebSocket Test";
-      wssv.UserCredentialsFinder = id => {
-          var name = id.Name;
+            //var cert = appConfig["ServerCertFile"];
+            //var passwd = appConfig["CertFilePassword"];
+            //wssv.SslConfiguration.ServerCertificate = new X509Certificate2(cert, passwd);
 
-          // Return user name, password, and roles.
-          return name == "nobita"
-                 ? new NetworkCredential (name, "password", "gunfighter")
-                 : null; // If the user credentials are not found.
-        };
-       */
 
-      // To resolve to wait for socket in TIME_WAIT state.
-      //wssv.ReuseAddress = true;
+            // To provide the HTTP Authentication (Basic/Digest).
+            /*
+            wssv.AuthenticationSchemes = AuthenticationSchemes.Basic;
+            wssv.Realm = "WebSocket Test";
+            wssv.UserCredentialsFinder = id => {
+                var name = id.Name;
 
-      // Add the WebSocket services.
-      wssv.AddWebSocketService<Echo> ("/Echo");
+                // Return user name, password, and roles.
+                return name == "nobita"
+                       ? new NetworkCredential (name, "password", "gunfighter")
+                       : null; // If the user credentials are not found.
+              };
+             */
+
+            // To resolve to wait for socket in TIME_WAIT state.
+            //wssv.ReuseAddress = true;
+
+            // Add the WebSocket services.
+            wssv.AddWebSocketService<Echo> ("/Echo");
       wssv.AddWebSocketService<Chat> ("/Chat");
 
       // Add the WebSocket service with initializing.

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
@@ -12,13 +13,18 @@ namespace Example3
   {
     public static void Main (string[] args)
     {
-      // Create a new instance of the HttpServer class.
-      //
-      // If you would like to provide the secure connection, you should
-      // create a new instance with the 'secure' parameter set to true or
-      // with an https scheme HTTP URL.
+            IConfiguration appConfig = new ConfigurationBuilder()
+                .AddJsonFile("config.json", true, true)
+                .AddEnvironmentVariables()
+                .Build();
 
-      var httpsv = new HttpServer (4649);
+            // Create a new instance of the HttpServer class.
+            //
+            // If you would like to provide the secure connection, you should
+            // create a new instance with the 'secure' parameter set to true or
+            // with an https scheme HTTP URL.
+
+            var httpsv = new HttpServer (4649);
       //var httpsv = new HttpServer (5963, true);
 
       //var httpsv = new HttpServer (System.Net.IPAddress.Any, 4649);
@@ -51,38 +57,38 @@ namespace Example3
       // To change the logging level.
       httpsv.Log.Level = LogLevel.Trace;
 
-      // To change the wait time for the response to the WebSocket Ping or Close.
-      //httpsv.WaitTime = TimeSpan.FromSeconds (2);
+            // To change the wait time for the response to the WebSocket Ping or Close.
+            //httpsv.WaitTime = TimeSpan.FromSeconds (2);
 
-      // Not to remove the inactive WebSocket sessions periodically.
-      //httpsv.KeepClean = false;
+            // Not to remove the inactive WebSocket sessions periodically.
+            //httpsv.KeepClean = false;
 #endif
-      // To provide the secure connection.
-      /*
-      var cert = ConfigurationManager.AppSettings["ServerCertFile"];
-      var passwd = ConfigurationManager.AppSettings["CertFilePassword"];
-      httpsv.SslConfiguration.ServerCertificate = new X509Certificate2 (cert, passwd);
-       */
+            // To provide the secure connection.
 
-      // To provide the HTTP Authentication (Basic/Digest).
-      /*
-      httpsv.AuthenticationSchemes = AuthenticationSchemes.Basic;
-      httpsv.Realm = "WebSocket Test";
-      httpsv.UserCredentialsFinder = id => {
-          var name = id.Name;
+            //var cert = appConfig["ServerCertFile"];
+            //var passwd = appConfig["CertFilePassword"];
+            //httpsv.SslConfiguration.ServerCertificate = new X509Certificate2(cert, passwd);
 
-          // Return user name, password, and roles.
-          return name == "nobita"
-                 ? new NetworkCredential (name, "password", "gunfighter")
-                 : null; // If the user credentials are not found.
-        };
-       */
 
-      // To resolve to wait for socket in TIME_WAIT state.
-      //httpsv.ReuseAddress = true;
+            // To provide the HTTP Authentication (Basic/Digest).
+            /*
+            httpsv.AuthenticationSchemes = AuthenticationSchemes.Basic;
+            httpsv.Realm = "WebSocket Test";
+            httpsv.UserCredentialsFinder = id => {
+                var name = id.Name;
 
-      // Set the document root path.
-      httpsv.DocumentRootPath = ConfigurationManager.AppSettings["DocumentRootPath"];
+                // Return user name, password, and roles.
+                return name == "nobita"
+                       ? new NetworkCredential (name, "password", "gunfighter")
+                       : null; // If the user credentials are not found.
+              };
+             */
+
+            // To resolve to wait for socket in TIME_WAIT state.
+            //httpsv.ReuseAddress = true;
+
+            // Set the document root path.
+            httpsv.DocumentRootPath = appConfig["DocumentRootPath"];
 
       // Set the HTTP GET request event.
       httpsv.OnGet += (sender, e) => {
