@@ -1,8 +1,11 @@
 ![Logo](websocket-sharp_logo.png)
 
-## Welcome to websocket-sharp! ##
+# Welcome to websocket-sharp! #
 
-Original repository is not updated to be used with .Net Core. There was a PR, but looks like it was not still merged even afetr an year. I have created this fork and updated all references to .Net 6.0. All example projects also updated to .Net 6.0.
+## Important Notes ##
+## Original repository is not updated to be used with .Net Core. There was a PR, but looks like it was not yet  merged even after an year. I have created this fork and updated all references to .Net 6.0. All example projects also updated to .Net 6.0.  ##
+
+
 
 websocket-sharp supports:
 
